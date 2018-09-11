@@ -17,10 +17,15 @@ RUN apk add --no-cache \
         libtool \
         m4
 
+COPY add-ecc-curves.patch libressl-2.7.patch  ./
+
 RUN curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.18.0/opensc-0.18.0.tar.gz  -o opensc-0.18.0.tar.gz \
     && tar -zxf opensc-0.18.0.tar.gz \
     && rm opensc-0.18.0.tar.gz \
+    && mv *.patch opensc-0.18.0 \
     && cd opensc-0.18.0 \
+    && patch src/tools/pkcs11-tool.c -i add-ecc-curves.patch \
+    && patch src/libopensc/sc-ossl-compat.h -i libressl-2.7.patch \
     && ./bootstrap
 
 RUN cd opensc-0.18.0 \
