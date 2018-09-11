@@ -29,12 +29,13 @@ RUN cd opensc-0.18.0 \
         --prefix=/usr \
         --sysconfdir=/etc \
         --disable-man \
-        --enable-thread_locking \
         --enable-zlib \
         --enable-readline \
         --enable-openssl \
         --enable-pcsc \
         --enable-sm \
+        LDFLAGS='-Wl,--as-needed' \
+        CFLAGS='-fno-strict-aliasing -Os -fomit-frame-pointer -Wall -Wextra -Wno-unused-parameter -Werror=declaration-after-statement' \
     && make
 
 RUN apk del .build-deps
