@@ -25,7 +25,7 @@ RUN curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.18.0/opensc-0
 
 RUN cd opensc-0.18.0 \
     && ./configure \
-        --host=x86_64-pc-linux-musl \
+        --host=x86_64-alpine-linux-musl \
         --prefix=/usr \
         --sysconfdir=/etc \
         --disable-man \
@@ -34,8 +34,9 @@ RUN cd opensc-0.18.0 \
         --enable-openssl \
         --enable-pcsc \
         --enable-sm \
+        CC='gcc' \
         LDFLAGS='-Wl,--as-needed' \
-        CFLAGS='-fno-strict-aliasing -Os -fomit-frame-pointer -Wall -Wextra -Wno-unused-parameter -Werror=declaration-after-statement' \
+        CFLAGS='-fno-strict-aliasing -Os -fomit-frame-pointer -Werror=declaration-after-statement' \
     && make
 
 RUN apk del .build-deps
