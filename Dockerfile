@@ -26,9 +26,7 @@ RUN curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.18.0/opensc-0
     && cd opensc-0.18.0 \
     && patch src/tools/pkcs11-tool.c -i add-ecc-curves.patch \
     && patch src/libopensc/sc-ossl-compat.h -i libressl-2.7.patch \
-    && ./bootstrap
-
-RUN cd opensc-0.18.0 \
+    && ./bootstrap \
     && ./configure \
         --host=x86_64-alpine-linux-musl \
         --prefix=/usr \
@@ -42,6 +40,8 @@ RUN cd opensc-0.18.0 \
         CC='gcc' \
         LDFLAGS='-Wl,--as-needed' \
         CFLAGS='-fno-strict-aliasing -Os -fomit-frame-pointer -Werror=declaration-after-statement' \
-    && make
+    && make \
+    && make install \
+    && apk del .build-deps \
+    && rm -r /usr/src/build
 
-RUN apk del .build-deps
