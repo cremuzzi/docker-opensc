@@ -1,5 +1,8 @@
 FROM alpine:3.8
 
+LABEL maintainer="Carlos Remuzzi <carlosremuzzi@gmail.com>"
+LABEL version=0.18.0
+
 WORKDIR /usr/src/build
 
 RUN apk add --no-cache \
