@@ -7,19 +7,19 @@ WORKDIR /usr/src/build
 
 RUN apk add --no-cache \
         ccid \
-        libressl-dev \
         pcsc-lite \
         pcsc-lite-dev \
-        readline-dev \
-        zlib-dev \
     && apk add --no-cache --virtual .build-deps \
         autoconf \
         automake \
         build-base \
         curl \
         gettext \
+        libressl-dev \
         libtool \
-        m4
+        m4 \
+        readline-dev \
+        zlib-dev
 
 COPY add-ecc-curves.patch libressl-2.7.patch  ./
 
