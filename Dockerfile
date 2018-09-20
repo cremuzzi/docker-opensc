@@ -6,6 +6,7 @@ LABEL version=0.18.0
 WORKDIR /usr/src/build
 
 RUN apk add --no-cache \
+        ccid \
         libressl-dev \
         pcsc-lite \
         pcsc-lite-dev \
