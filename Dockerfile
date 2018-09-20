@@ -48,3 +48,13 @@ RUN curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.18.0/opensc-0
     && apk del .build-deps \
     && rm -r /usr/src/build
 
+RUN addgroup -g 1000 opensc \
+    && adduser -u 1000 -G opensc -s /bin/sh -D opensc \
+    && mkdir -p /run/pcscd \
+    && chown -R nobody:nobody /run/pcscd
+
+WORKDIR /home/opensc
+
+USER opensc
+
+CMD ["pcscd","-f","-i"]
