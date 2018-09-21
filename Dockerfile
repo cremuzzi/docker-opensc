@@ -1,7 +1,7 @@
 FROM alpine:3.8
 
 LABEL maintainer="Carlos Remuzzi <carlosremuzzi@gmail.com>"
-LABEL version=0.18.0
+LABEL version="0.19.0"
 
 WORKDIR /usr/src/build
 
@@ -21,15 +21,10 @@ RUN apk add --no-cache \
         readline-dev \
         zlib-dev
 
-COPY add-ecc-curves.patch libressl-2.7.patch  ./
-
-RUN curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.18.0/opensc-0.18.0.tar.gz  -o opensc-0.18.0.tar.gz \
-    && tar -zxf opensc-0.18.0.tar.gz \
-    && rm opensc-0.18.0.tar.gz \
-    && mv *.patch opensc-0.18.0 \
-    && cd opensc-0.18.0 \
-    && patch src/tools/pkcs11-tool.c -i add-ecc-curves.patch \
-    && patch src/libopensc/sc-ossl-compat.h -i libressl-2.7.patch \
+RUN curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.19.0/opensc-0.19.0.tar.gz  -o opensc-0.19.0.tar.gz \
+    && tar -zxf opensc-0.19.0.tar.gz \
+    && rm opensc-0.19.0.tar.gz \
+    && cd opensc-0.19.0 \
     && ./bootstrap \
     && ./configure \
         --host=x86_64-alpine-linux-musl \
@@ -42,8 +37,6 @@ RUN curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.18.0/opensc-0
         --enable-pcsc \
         --enable-sm \
         CC='gcc' \
-        LDFLAGS='-Wl,--as-needed' \
-        CFLAGS='-fno-strict-aliasing -Os -fomit-frame-pointer -Werror=declaration-after-statement' \
     && make \
     && make install \
     && apk del .build-deps \
