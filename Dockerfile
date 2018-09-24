@@ -19,9 +19,8 @@ RUN apk add --no-cache \
         libtool \
         m4 \
         readline-dev \
-        zlib-dev
-
-RUN curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.19.0/opensc-0.19.0.tar.gz  -o opensc-0.19.0.tar.gz \
+        zlib-dev \
+    && curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.19.0/opensc-0.19.0.tar.gz  -o opensc-0.19.0.tar.gz \
     && tar -zxf opensc-0.19.0.tar.gz \
     && rm opensc-0.19.0.tar.gz \
     && cd opensc-0.19.0 \
@@ -40,9 +39,8 @@ RUN curl -fsL https://github.com/OpenSC/OpenSC/releases/download/0.19.0/opensc-0
     && make \
     && make install \
     && apk del .build-deps \
-    && rm -r /usr/src/build
-
-RUN addgroup -g 1000 opensc \
+    && rm -r /usr/src/build \
+    && addgroup -g 1000 opensc \
     && adduser -u 1000 -G opensc -s /bin/sh -D opensc \
     && mkdir -p /run/pcscd \
     && chown -R nobody:nobody /run/pcscd
