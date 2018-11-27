@@ -45,8 +45,6 @@ RUN apk add --no-cache \
     && mkdir -p /run/pcscd \
     && chown -R nobody:nobody /run/pcscd
 
-WORKDIR /home/opensc
-
-USER opensc
+WORKDIR /
 
 CMD ["pcscd","-f","-i"]
