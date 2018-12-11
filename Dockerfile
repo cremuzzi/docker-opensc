@@ -11,6 +11,7 @@ WORKDIR /usr/src/build
 
 RUN apk add --no-cache \
         ccid \
+        openssl \
         pcsc-lite \
         pcsc-lite-dev \
     && apk add --no-cache --virtual .build-deps \
