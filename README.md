@@ -1,6 +1,8 @@
-## How to use this image
+# How to use this image
 
-# 1. Run a simple container
+## Quickstart
+
+### 1. First run a simple container
 
 First you need to plug in your USB crypto token or smartcard reader.
 
@@ -14,7 +16,7 @@ Please notice the `--device` option. In this example we are are sharing our usb 
 
 This image runs the `pcscd` daemon by default.
 
-# 2. Execute any of the tools provided by OpenSC
+### 2. Then execute any of the tools provided by OpenSC
 
 for instance, you can dump a list of all the objects on your crypto device:
 
@@ -24,11 +26,14 @@ docker exec opensc pkcs15-tool -D
 
 Please check the [OpenSC wiki](http://htmlpreview.github.io/?https://github.com/OpenSC/OpenSC/blob/master/doc/tools/tools.html) for further information on the tools provided by OpenSC.
 
+
 ## OpenSSL pkcs11 engine
 
-This image comes with the libp11 engine for openssl. This allows you to use openssl with your crypto device.
+This image comes with the [libp11](https://github.com/OpenSC/libp11) engine for openssl. This allows you to use openssl with your crypto device.
 
-For instance, You can create a CSR with your crypto device by first running a container with an openssl config file:
+For instance, you can create a CSR with your crypto device in two steps.
+
+### 1. first run a container with a volume containing your ssl conf file:
 
 ```sh
 docker run --rm -v YOUR-HOST-PATH:/myssl --device /dev/bus/usb  --name opensc -d cremuzzi/opensc
@@ -52,7 +57,7 @@ MODULE_PATH = /usr/lib/pkcs11/opensc-pkcs11.so
 init = 0
 ```
 
-Then you can call openssl to create for instance a CSR (Certificate Signing Request):
+### 2. then you can call openssl to create for instance a CSR (Certificate Signing Request):
 
 ```sh
 docker exec -i -t opensc openssl req -engine pkcs11 -keyform engine -key "pkcs11:object=MY-PRIVATE-KEY-ID;type=private;" -new -config /myssl/my.conf -out /myssl/request.csr
