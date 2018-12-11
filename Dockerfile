@@ -3,6 +3,8 @@ FROM alpine:3.8
 LABEL maintainer="Carlos Remuzzi <carlosremuzzi@gmail.com>"
 LABEL version="0.19.0"
 
+ARG LIBP11_VERSION=0.4.8
+
 WORKDIR /usr/src/build
 
 RUN apk add --no-cache \
@@ -37,8 +39,21 @@ RUN apk add --no-cache \
         --enable-sm \
         CC='gcc' \
     && make \
-    && make install \
-    && apk del .build-deps \
+    && make install
+
+RUN curl -fsL https://github.com/OpenSC/libp11/releases/download/libp11-${LIBP11_VERSION}/libp11-${LIBP11_VERSION}.tar.gz -o libp11-${LIBP11_VERSION}.tar.gz \
+    && tar -zxf libp11-${LIBP11_VERSION}.tar.gz \
+    && rm libp11-${LIBP11_VERSION}.tar.gz \
+    && cd libp11-${LIBP11_VERSION} \
+    && ./configure \
+        --host=x86_64-alpine-linux-musl \
+#        CFLAGS='-Wno-traditional -Wno-error -Werror=declaration-after-statement' \
+        CFLAGS='-Wno-error -Wno-traditional -Werror=declaration-after-statement' \
+        CC='gcc' \
+    && make \
+    && make install
+
+RUN apk del .build-deps \
     && rm -r /usr/src/build \
     && addgroup -g 1000 opensc \
     && adduser -u 1000 -G opensc -s /bin/sh -D opensc \
