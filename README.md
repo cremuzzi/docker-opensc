@@ -1,6 +1,6 @@
-# How to use this image
+## How to use this image
 
-## 1. Run a simple container
+# 1. Run a simple container
 
 First you need to plug in your USB crypto token or smartcard reader.
 
@@ -14,7 +14,7 @@ Please notice the `--device` option. In this example we are are sharing our usb 
 
 This image runs the `pcscd` daemon by default.
 
-## 2. Execute any of the tools provided by OpenSC
+# 2. Execute any of the tools provided by OpenSC
 
 for instance, you can dump a list of all the objects on your crypto device:
 
@@ -24,7 +24,7 @@ docker exec opensc pkcs15-tool -D
 
 Please check the [OpenSC wiki](http://htmlpreview.github.io/?https://github.com/OpenSC/OpenSC/blob/master/doc/tools/tools.html) for further information on the tools provided by OpenSC.
 
-# OpenSSL pkcs11 engine
+## OpenSSL pkcs11 engine
 
 This image comes with the libp11 engine for openssl. This allows you to use openssl with your crypto device.
 
