@@ -1,11 +1,10 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
 ARG LIBP11_VERSION=0.4.9
 ARG OPENSC_VERSION=0.19.0
 
 LABEL maintainer="Carlos Remuzzi <carlosremuzzi@gmail.com>"
 LABEL version=${OPENSC_VERSION}
-
 
 WORKDIR /usr/src/build
 
