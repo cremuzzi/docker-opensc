@@ -56,6 +56,10 @@ RUN apk add --no-cache \
     && mkdir -p /run/pcscd \
     && chown -R nobody:nobody /run/pcscd
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+
 WORKDIR /
 
-CMD ["pcscd","-f","-i"]
+ENTRYPOINT ["entrypoint.sh"]
+
+CMD ["pkcs11-tool","-O"]
