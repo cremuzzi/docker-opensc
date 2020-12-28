@@ -1,7 +1,7 @@
 FROM alpine:3.12
 
-ARG LIBP11_VERSION=0.4.10
-ARG OPENSC_VERSION=0.20.0
+ARG LIBP11_VERSION=0.4.11
+ARG OPENSC_VERSION=0.21.0
 
 LABEL maintainer="Carlos Remuzzi <carlosremuzzi@gmail.com>"
 LABEL version=${OPENSC_VERSION}
